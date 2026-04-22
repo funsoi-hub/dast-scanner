@@ -1,0 +1,48 @@
+﻿services:
+  zap:
+    image: zaproxy/zap-stable:latest
+    container_name: zap-persistent
+    restart: unless-stopped
+    command: >
+      zap.sh -daemon
+      -port 8080
+      -host 0.0.0.0
+      -config api.disablekey=true
+      -config api.addrs.addr.name=.*
+      -config api.addrs.addr.regex=true
+    ports:
+      - "8081:8080"
+    networks:
+      - scanner-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/JSON/core/view/version/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    volumes:
+      - zap-data:/home/zap/.ZAP
+
+  scanner:
+    build: .
+    image: cordros-scanner:latest
+    container_name: scanner-ephemeral
+    depends_on:
+      zap:
+        condition: service_healthy
+    environment:
+      - ZAP_HOST=zap
+      - ZAP_PORT=8080
+      - SCAN_MODE=docker
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - scanner-network
+    command: --url https://example.com --active-timeout 7200
+
+networks:
+  scanner-network:
+    driver: bridge
+
+volumes:
+  zap-data:
