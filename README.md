@@ -16,6 +16,7 @@ Dynamic Application Security Testing (DAST) tool built on OWASP ZAP. Automates w
 - Persistent ZAP Container - Faster repeat scans
 - CVSS v3.1 Scoring - Industry-standard severity ratings
 - Clickable Table of Contents - Easy report navigation
+- Extended Timeout Handling - No inactivity timeout, scan runs to completion
 
 ## Architecture
 
@@ -45,36 +46,44 @@ Dynamic Application Security Testing (DAST) tool built on OWASP ZAP. Automates w
 
 ### Installation
 
-Clone the repository and start the services:
+Clone the repository and navigate to the project folder:
 
 git clone https://github.com/YOUR_USERNAME/dast-scanner-public.git
 cd dast-scanner-public
-docker compose up -d zap
-docker compose build scanner
 
 ### Usage
 
-Run a basic scan:
+Run a scan using the Windows batch file:
 
-docker compose run --rm scanner --url https://example.com
+docker-scan.bat
 
-Run with custom timeout of 4 hours:
+Enter the target URL when prompted. The scan will run for approximately 45-90 minutes depending on application size.
 
-docker compose run --rm scanner --url https://example.com --active-timeout 14400
+Alternatively, use Docker Compose directly:
 
-Use a custom scan ID for tracking:
-
-docker compose run --rm scanner --url https://example.com --scan-id "Q1-2026-ASSESSMENT"
+docker compose up -d zap
+docker compose build scanner
+docker compose run --rm scanner --url https://example.com --active-timeout 7200
 
 ### Command Line Arguments
 
 | Argument | Description | Default |
 |----------|-------------|---------|
 | --url | Target URL to scan | Required |
-| --active-timeout | Max scan duration in seconds | 7200 |
+| --active-timeout | Max scan duration in seconds | 7200 (2 hours) |
 | --scan-id | Custom scan identifier | Auto-generated |
 | --zap-host | ZAP API host | localhost |
 | --zap-port | ZAP API port | 8080 |
+
+## Windows Batch Files
+
+| File | Purpose |
+|------|---------|
+| docker-scan.bat | Main launcher - starts ZAP and runs scan |
+| docker-rebuild.bat | Rebuild scanner image after code changes |
+| docker-stop.bat | Stop all containers |
+| docker-status.bat | Check container and report status |
+| cleanup.bat | Delete all reports and reset containers |
 
 ## Report Output
 
@@ -88,6 +97,7 @@ Reports are generated in the reports directory with naming format DSCAN-XXX_YYYY
 - Executive Summary with visual severity cards
 - Testing Summary by vulnerability category
 - Tester Notes and Recommendations
+- Vulnerability Summary Table
 - Detailed findings with evidence and remediation steps
 
 ## Scan Phases and Timing
@@ -98,7 +108,58 @@ Reports are generated in the reports directory with naming format DSCAN-XXX_YYYY
 | Active Attacks | 36-37% | SQLi, XSS, CSRF probes | 20-40 minutes |
 | Completion | 37-100% | Remaining checks and alert processing | 10-20 minutes |
 
-Note that the 36 to 37 percent phase may appear stalled. This is normal behavior as ZAP sends hundreds of test payloads to each discovered parameter. Do not interrupt the scan during this phase.
+When you run a scan, you will see output like this:
+
+========================================
+DAST Scanner - Web Application Security
+========================================
+
+Scan Phases:
+  0-36%  : Spider discovery (fast)
+  36-37% : Active attacks - SQLi, XSS, etc. (20-40 min)
+  37-100%: Completing active scan
+
+Total expected time: 45-90 minutes
+
+Enter target URL: https://example.com
+
+========================================
+Cleaning up old containers...
+========================================
+Cleanup complete.
+
+========================================
+Checking Docker environment...
+========================================
+Starting ZAP container...
+This will take 60-90 seconds on first run as ZAP initializes...
+
+Waiting for ZAP to complete initialization...
+Still initializing... (1/24)
+Still initializing... (2/24)
+...
+ZAP initialization complete.
+
+========================================
+Starting vulnerability scan...
+========================================
+
+[+] Connected to ZAP version 2.17.0
+[*] Starting spider discovery...
+[*] Spider: 0%
+[*] Spider: 100%
+[✓] Discovered 42 URLs
+[*] Starting active scan (SQLi, XSS, etc.)...
+[*] Phase 1: 0-36% = Discovery | Phase 2: 36-37% = Active Attacks | Phase 3: 37-100% = Completion
+[*] Progress: 0% (0s) - Discovery
+[*] Progress: 36% (170s) - Active Attacks
+[*] Scan at 36% - continuing active attacks...
+[*] Progress: 100% (2185s) - Completion
+[✓] Scan completed!
+[✓] Raw: 489 | Unique: 22 | Consolidated: 467
+[+] HTML report saved to: reports/DSCAN-001_20260422_123456.html
+
+Note that the 36 to 37 percent phase may appear stalled with "continuing active attacks" messages. This is normal behavior as ZAP sends hundreds of test payloads to each discovered parameter. Do not interrupt the scan during this phase.
 
 ## Project Structure
 
@@ -108,6 +169,12 @@ dast-scanner-public/
 ├── docker-compose.yml       # Docker services configuration
 ├── Dockerfile               # Scanner container build
 ├── requirements.txt         # Python dependencies
+├── docker-scan.bat          # Windows launcher script
+├── docker-rebuild.bat       # Rebuild scanner image
+├── docker-stop.bat          # Stop containers
+├── docker-status.bat        # Check status
+├── cleanup.bat              # Reset all data
+├── .gitignore               # Git ignore rules
 ├── LICENSE                  # MIT License
 └── README.md                # This file
 ```
@@ -117,12 +184,40 @@ dast-scanner-public/
 | Issue | Solution |
 |-------|----------|
 | ZAP container fails to start | Increase Docker memory to at least 4GB in Docker Desktop settings |
-| Scan stalls at 36-37% | This is normal. Wait 20-40 minutes for active attack phase to complete |
+| Scan stalls at 36-37% with "continuing" messages | This is normal. Wait 20-40 minutes for active attack phase to complete |
 | No URLs discovered | Target may be a single page application or has no crawlable links. Verify target accessibility |
 | Port 8081 already in use | Change the port mapping in docker-compose.yml or stop the conflicting process |
-| Container name conflict | Run docker stop scanner and docker rm scanner to clean up interrupted containers |
+| Container name conflict | Run cleanup.bat to reset all containers and networks |
 | Out of memory errors | Increase Docker Desktop memory allocation to 8GB or more |
+| "ZAP is taking longer than expected" | First run downloads addons. Wait up to 2 minutes |
 
+## Maintenance Commands
+
+Check status of containers and reports:
+
+docker-status.bat
+
+Rebuild scanner after updating code:
+
+docker-rebuild.bat
+
+Stop all containers when not in use:
+
+docker-stop.bat
+
+Reset everything and delete all reports:
+
+cleanup.bat
+
+## Contributing
+
+Contributions are welcome. Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch using git checkout -b feature/amazing-feature
+3. Commit your changes using git commit -m 'Add amazing feature'
+4. Push to the branch using git push origin feature/amazing-feature
+5. Open a Pull Request on GitHub
 
 ## Disclaimer
 
@@ -139,9 +234,3 @@ MIT License summary: Permission is hereby granted, free of charge, to any person
 - OWASP ZAP for providing the world's most popular free web security testing platform
 - The open source security community for methodologies and best practices
 - Inspired by professional penetration testing frameworks including NIST SP 800-115 and OWASP Testing Guide
-
-## Author
-
-Funso Isola
-
-LinkedIn: linkedin.com/in/funisola/
