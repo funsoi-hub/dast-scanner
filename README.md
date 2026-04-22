@@ -108,58 +108,6 @@ Reports are generated in the reports directory with naming format DSCAN-XXX_YYYY
 | Active Attacks | 36-37% | SQLi, XSS, CSRF probes | 20-40 minutes |
 | Completion | 37-100% | Remaining checks and alert processing | 10-20 minutes |
 
-When you run a scan, you will see output like this:
-
-========================================
-DAST Scanner - Web Application Security
-========================================
-
-Scan Phases:
-  0-36%  : Spider discovery (fast)
-  36-37% : Active attacks - SQLi, XSS, etc. (20-40 min)
-  37-100%: Completing active scan
-
-Total expected time: 45-90 minutes
-
-Enter target URL: https://example.com
-
-========================================
-Cleaning up old containers...
-========================================
-Cleanup complete.
-
-========================================
-Checking Docker environment...
-========================================
-Starting ZAP container...
-This will take 60-90 seconds on first run as ZAP initializes...
-
-Waiting for ZAP to complete initialization...
-Still initializing... (1/24)
-Still initializing... (2/24)
-...
-ZAP initialization complete.
-
-========================================
-Starting vulnerability scan...
-========================================
-
-[+] Connected to ZAP version 2.17.0
-[*] Starting spider discovery...
-[*] Spider: 0%
-[*] Spider: 100%
-[✓] Discovered 42 URLs
-[*] Starting active scan (SQLi, XSS, etc.)...
-[*] Phase 1: 0-36% = Discovery | Phase 2: 36-37% = Active Attacks | Phase 3: 37-100% = Completion
-[*] Progress: 0% (0s) - Discovery
-[*] Progress: 36% (170s) - Active Attacks
-[*] Scan at 36% - continuing active attacks...
-[*] Progress: 100% (2185s) - Completion
-[✓] Scan completed!
-[✓] Raw: 489 | Unique: 22 | Consolidated: 467
-[+] HTML report saved to: reports/DSCAN-001_20260422_123456.html
-
-Note that the 36 to 37 percent phase may appear stalled with "continuing active attacks" messages. This is normal behavior as ZAP sends hundreds of test payloads to each discovered parameter. Do not interrupt the scan during this phase.
 
 ## Project Structure
 
