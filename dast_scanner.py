@@ -1,7 +1,7 @@
 ﻿#!/usr/bin/env python3
 """
 DAST Scanner - DAST SCANNER
-Professional VAPT Report Template - Professional Edition
+Professional VAPT Report Template - Cordros Branded
 """
 
 import asyncio
@@ -1104,5 +1104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
