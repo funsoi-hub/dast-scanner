@@ -1,7 +1,7 @@
 ﻿#!/usr/bin/env python3
 """
-DAST Scanner - DAST SCANNER
-Professional VAPT Report Template - Cordros Branded
+DAST Scanner - Web Application Vulnerability Assessment Tool
+Professional VAPT Report Template - Dark Blue Theme
 """
 
 import asyncio
@@ -20,10 +20,7 @@ from zapv2 import ZAPv2
 init(autoreset=True)
 
 COMPANY_NAME = "DAST Scanner"
-COMPANY_FULL = "Security Assessment"
-PRIMARY_COLOR = "#8B0000"
-SECONDARY_COLOR = "#1a1a2e"
-ACCENT_COLOR = "#c0392b"
+COMPANY_FULL = "Security Assessment Team"
 
 # ----------------------------------------------------------------------
 # Scan ID Manager
@@ -378,7 +375,7 @@ class DASTScanner:
         self.start_time = datetime.now()
         self.assessment_start = self.start_time.strftime('%B %d, %Y')
         print(f"\n{Fore.GREEN}{'=' * 60}")
-        print(f"{Fore.GREEN}[+] DAST SCANNER - Web Application VAPT Scanner")
+        print(f"{Fore.GREEN}[+] DAST Scanner - Web Application VAPT")
         print(f"{Fore.GREEN}[+] Scan ID: {self.scan_id}")
         print(f"{Fore.GREEN}{'=' * 60}")
         print(f"{Fore.WHITE}Target: {self.target_url}")
@@ -458,12 +455,12 @@ class DASTScanner:
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{COMPANY_NAME} - Vulnerability Assessment Report</title>
+    <title>DAST Scanner - Vulnerability Assessment Report</title>
     <style>
         :root {{
-            --primary: #8B0000;
-            --secondary: #1a1a2e;
-            --accent: #c0392b;
+            --primary: #1a365d;
+            --primary-dark: #0f172a;
+            --accent: #2563eb;
             --light-bg: #f8f9fa;
             --border: #dee2e6;
             --text: #333333;
@@ -489,9 +486,7 @@ class DASTScanner:
             overflow: hidden;
         }}
         
-        .content {{
-            padding: 40px;
-        }}
+        .content {{ padding: 40px; }}
         
         h1 {{
             color: var(--primary);
@@ -503,7 +498,7 @@ class DASTScanner:
         }}
         
         h2 {{
-            color: var(--secondary);
+            color: var(--primary-dark);
             font-size: 20px;
             font-weight: 600;
             border-bottom: 2px solid var(--border);
@@ -513,25 +508,16 @@ class DASTScanner:
         }}
         
         h3 {{
-            color: var(--secondary);
+            color: var(--primary-dark);
             font-size: 16px;
             font-weight: 600;
             margin-top: 25px;
             margin-bottom: 15px;
         }}
         
-        p {{
-            margin-bottom: 15px;
-        }}
-        
-        ul, ol {{
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }}
-        
-        li {{
-            margin-bottom: 5px;
-        }}
+        p {{ margin-bottom: 15px; }}
+        ul, ol {{ margin-left: 20px; margin-bottom: 15px; }}
+        li {{ margin-bottom: 5px; }}
         
         table {{
             width: 100%;
@@ -541,7 +527,7 @@ class DASTScanner:
         }}
         
         th {{
-            background: var(--secondary);
+            background: var(--primary-dark);
             color: white;
             font-weight: 600;
             padding: 12px 15px;
@@ -554,12 +540,10 @@ class DASTScanner:
             vertical-align: top;
         }}
         
-        tr:hover {{
-            background: var(--light-bg);
-        }}
+        tr:hover {{ background: var(--light-bg); }}
         
         .severity-critical {{
-            background: #7b1fa2;
+            background: #4c1d95;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -569,7 +553,7 @@ class DASTScanner:
         }}
         
         .severity-high {{
-            background: #d32f2f;
+            background: #dc2626;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -579,7 +563,7 @@ class DASTScanner:
         }}
         
         .severity-medium {{
-            background: #f57c00;
+            background: #d97706;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -589,7 +573,7 @@ class DASTScanner:
         }}
         
         .severity-low {{
-            background: #388e3c;
+            background: #059669;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -599,7 +583,7 @@ class DASTScanner:
         }}
         
         .severity-info {{
-            background: #1976d2;
+            background: #2563eb;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -624,11 +608,11 @@ class DASTScanner:
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }}
         
-        .card.critical {{ background: #7b1fa2; }}
-        .card.high {{ background: #d32f2f; }}
-        .card.medium {{ background: #f57c00; }}
-        .card.low {{ background: #388e3c; }}
-        .card.info {{ background: #1976d2; }}
+        .card.critical {{ background: #4c1d95; }}
+        .card.high {{ background: #dc2626; }}
+        .card.medium {{ background: #d97706; }}
+        .card.low {{ background: #059669; }}
+        .card.info {{ background: #2563eb; }}
         
         .card .count {{
             font-size: 48px;
@@ -665,7 +649,7 @@ class DASTScanner:
         .finding-title {{
             font-size: 18px;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--primary-dark);
         }}
         
         .evidence-box {{
@@ -683,7 +667,7 @@ class DASTScanner:
         
         .remediation-box {{
             background: #e8f5e9;
-            border-left: 4px solid #4caf50;
+            border-left: 4px solid #059669;
             padding: 15px 20px;
             border-radius: 0 6px 6px 0;
             margin: 15px 0;
@@ -698,7 +682,7 @@ class DASTScanner:
         }}
         
         .badge {{
-            background: var(--secondary);
+            background: var(--primary-dark);
             color: white;
             padding: 2px 10px;
             border-radius: 20px;
@@ -717,9 +701,7 @@ class DASTScanner:
             font-size: 13px;
         }}
         
-        .url-list ul {{
-            margin: 5px 0 0 20px;
-        }}
+        .url-list ul {{ margin: 5px 0 0 20px; }}
         
         .confidential-box {{
             background: var(--light-bg);
@@ -751,36 +733,27 @@ class DASTScanner:
             column-gap: 40px;
         }}
         
-        .toc li {{
-            margin-bottom: 8px;
-            break-inside: avoid;
-        }}
+        .toc li {{ margin-bottom: 8px; break-inside: avoid; }}
         
         .toc a {{
-            color: var(--secondary);
+            color: var(--primary-dark);
             text-decoration: none;
             font-size: 14px;
         }}
         
         .toc a:hover {{
-            color: var(--primary);
+            color: var(--accent);
             text-decoration: underline;
         }}
         
-        .back-to-top {{
-            float: right;
-            font-size: 12px;
-            font-weight: normal;
-        }}
+        .back-to-top {{ float: right; font-size: 12px; font-weight: normal; }}
         
         .back-to-top a {{
             color: var(--text-light);
             text-decoration: none;
         }}
         
-        .back-to-top a:hover {{
-            color: var(--primary);
-        }}
+        .back-to-top a:hover {{ color: var(--accent); }}
         
         .footer {{
             margin-top: 50px;
@@ -791,25 +764,11 @@ class DASTScanner:
             font-size: 12px;
         }}
         
-        .info-grid {{
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 10px 20px;
-            margin: 15px 0;
-        }}
-        
-        .info-label {{
-            font-weight: 600;
-            color: var(--secondary);
-        }}
-        
-        .risk-section {{
-            margin: 15px 0;
-        }}
+        .risk-section {{ margin: 15px 0; }}
         
         .risk-label {{
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--primary-dark);
             display: inline-block;
             width: 100px;
         }}
@@ -825,7 +784,7 @@ class DASTScanner:
 <body>
 <div class="report-container">
     <div class="content">
-        <h1>{COMPANY_NAME}<br>Web Application Vulnerability Assessment Report</h1>
+        <h1>Web Application Vulnerability Assessment Report</h1>
         <p style="font-size: 16px; color: var(--text-light); margin-bottom: 30px;">{report_date}</p>
         
         <div class="toc">
@@ -854,12 +813,12 @@ class DASTScanner:
         
         <h2 id="confidentiality">Confidentiality Statement</h2>
         <div class="confidential-box">
-            This document is the exclusive property of {COMPANY_FULL}. 
+            This document is the exclusive property of the authorized assessment team. 
             This document contains proprietary and confidential information. Duplication, 
             redistribution, or use, in whole or in part, in any form, requires the consent 
-            of {COMPANY_FULL}.
+            of the assessment team.
         </div>
-        <p>{COMPANY_FULL} may share this document with auditors under non-disclosure agreements to demonstrate penetration test requirement compliance.</p>
+        <p>This document may be shared with auditors under non-disclosure agreements to demonstrate penetration test requirement compliance.</p>
         
         <h2 id="disclaimer">Disclaimer</h2>
         <p>A penetration test is considered a snapshot in time. The findings and recommendations reflect the information gathered during the assessment, not any changes or modifications made outside of that period.</p>
@@ -868,11 +827,11 @@ class DASTScanner:
         <h2 id="contact">Contact Information</h2>
         <table>
             <tr><th>Organization</th><th>Name</th><th>Role</th><th>Email</th></tr>
-            <tr><td>{COMPANY_FULL}</td><td>Your Name</td><td>Security Team</td><td>your-email@example.com</td></tr>
+            <tr><td>Security Assessment Team</td><td>Security Engineer</td><td>VAPT Specialist</td><td>security@example.com</td></tr>
         </table>
         
-        <h2 id="overview">Assessment Overview <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
-        <p>{COMPANY_NAME} engaged in a security assessment to evaluate the security posture of its web application. All testing performed is based on the NIST SP 800-115 Technical Guide to Information Security Testing and Assessment, OWASP Testing Guide (v4), and customized testing frameworks.</p>
+        <h2 id="overview">Assessment Overview <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
+        <p>This security assessment was conducted to evaluate the security posture of the target web application. All testing performed is based on the NIST SP 800-115 Technical Guide to Information Security Testing and Assessment, OWASP Testing Guide (v4), and customized testing frameworks.</p>
         <p><strong>Phases of penetration testing activities include the following:</strong></p>
         <ul>
             <li><strong>Planning</strong> - Customer goals are gathered, and rules of engagement are obtained.</li>
@@ -881,7 +840,7 @@ class DASTScanner:
             <li><strong>Reporting</strong> - Document all found vulnerabilities, exploits, failed attempts, and company strengths and weaknesses.</li>
         </ul>
         
-        <h2 id="details">Assessment Details <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="details">Assessment Details <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <table>
             <tr><th style="width: 200px;">Item</th><th>Details</th></tr>
             <tr><td>Target Application</td><td>{self.target_url}</td></tr>
@@ -893,7 +852,7 @@ class DASTScanner:
             <tr><td>Scan Duration</td><td>{self.scan_statistics['scan_duration']}</td></tr>
         </table>
         
-        <h2 id="scope">Scope & Exclusions <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="scope">Scope & Exclusions <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <h3>Scope Inclusions</h3>
         <ul>
             <li>Web application vulnerability assessment of {self.target_url}</li>
@@ -911,7 +870,7 @@ class DASTScanner:
         </ul>
         <p>All other attacks not specified above were permitted within the defined scope.</p>
         
-        <h2 id="severity">Finding Severity Ratings <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="severity">Finding Severity Ratings <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <p>The following table defines levels of severity and the corresponding CVSS score range that are used throughout the document to assess vulnerability and risk impact.</p>
         <table>
             <tr><th>Severity</th><th>CVSS Score Range</th><th>Definition</th></tr>
@@ -922,14 +881,14 @@ class DASTScanner:
             <tr><td><span class="severity-info">Informational</span></td><td>N/A</td><td>No vulnerability exists. Additional information is provided regarding items noticed during testing, strong controls, and additional documentation.</td></tr>
         </table>
         
-        <h2 id="risk">Risk Explanation <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="risk">Risk Explanation <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <p>Risk is measured by two factors: <strong>Likelihood</strong> and <strong>Impact</strong>.</p>
         <h3>Likelihood</h3>
         <p>Likelihood measures the potential of a vulnerability being exploited. Ratings are given based on the difficulty of the attack, the available tools, the attacker's skill level, and the client environment.</p>
         <h3>Impact</h3>
         <p>Impact measures the potential vulnerability's effect on operations, including confidentiality, integrity, and availability of client systems and/or data, reputational harm, and financial loss.</p>
         
-        <h2 id="executive">Executive Summary <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="executive">Executive Summary <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <div class="summary-cards">
             <div class="card critical"><div class="count">{critical}</div><div class="label">Critical</div></div>
             <div class="card high"><div class="count">{high}</div><div class="label">High</div></div>
@@ -940,8 +899,8 @@ class DASTScanner:
         <p>This report presents the findings of a Dynamic Application Security Testing (DAST) assessment performed on <strong>{self.target_url}</strong>. The assessment identified a total of <strong>{total}</strong> unique vulnerabilities (from {self.scan_statistics['raw_findings']} raw findings, with duplicates consolidated across multiple URLs).</p>
         <p>The scan discovered <strong>{len(self.visited_urls)}</strong> unique URLs and completed in <strong>{self.scan_statistics['scan_duration']}</strong>.</p>
         
-        <h2 id="testing-summary">Testing Summary <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
-        <p>The web application assessment evaluated {COMPANY_NAME}'s security posture. From an external perspective, the assessment team performed vulnerability scanning and analysis on the web application.</p>
+        <h2 id="testing-summary">Testing Summary <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
+        <p>The web application assessment evaluated the target application's security posture. From an external perspective, the assessment team performed vulnerability scanning and analysis on the web application.</p>
         <p>The assessment team discovered the following categories of findings:</p>
         <ul>{category_html}</ul>
         <p>The following table illustrates the vulnerabilities found by impact:</p>
@@ -954,7 +913,7 @@ class DASTScanner:
             <tr><td>Informational</td><td>{info}</td></tr>
         </table>
         
-        <h2 id="recommendations">Tester Notes & Recommendations <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="recommendations">Tester Notes & Recommendations <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <p>Based on the findings from this assessment, the following high-level recommendations are provided:</p>
         <ol>{rec_html}</ol>
         <p><strong>General Security Recommendations:</strong></p>
@@ -966,7 +925,7 @@ class DASTScanner:
             <li>Enable comprehensive logging and monitoring for security events.</li>
         </ul>
         
-        <h2 id="vulnerability-summary">Vulnerability Summary <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>
+        <h2 id="vulnerability-summary">Vulnerability Summary <span class="back-to-top"><a href="#top">Back to top</a></span></h2>
         <table>
             <tr><th>Finding ID</th><th>Vulnerability</th><th>Severity</th><th>CVSS</th><th>Recommendation</th></tr>
 '''
@@ -984,7 +943,7 @@ class DASTScanner:
             html += f'<tr><td colspan="5" style="text-align:center">... and {len(self.findings)-30} more findings (see detailed section below)</td></tr>'
         html += '</table>'
         
-        html += '<h2 id="detailed-findings">Web Application Penetration Test Findings <span class="back-to-top"><a href="#top">↑ Back to top</a></span></h2>'
+        html += '<h2 id="detailed-findings">Web Application Penetration Test Findings <span class="back-to-top"><a href="#top">Back to top</a></span></h2>'
         
         for idx, f in enumerate(self.findings):
             safe_desc = self._escape_html(f.description)
@@ -1046,9 +1005,9 @@ class DASTScanner:
         
         html += f'''
         <div class="footer">
-            <p>Confidential - {COMPANY_FULL} | Generated by DAST Scanner</p>
+            <p>Confidential - Generated by DAST Scanner</p>
             <p>Scan ID: {self.scan_id} | Assessment Date: {report_date}</p>
-            <p>Contact: Your Name (your-email@example.com)</p>
+            <p>DAST Scanner - Web Application Security Testing Tool</p>
         </div>
     </div>
 </div>
@@ -1078,7 +1037,7 @@ class DASTScanner:
         print(f"{Fore.GREEN}{'=' * 60}")
 
 def main():
-    parser = argparse.ArgumentParser(description='DAST Scanner - DAST SCANNER')
+    parser = argparse.ArgumentParser(description='DAST Scanner - Web Application VAPT')
     parser.add_argument('--url', required=True, help='Target URL')
     parser.add_argument('--active-timeout', type=int, default=7200)
     parser.add_argument('--scan-id', help='Optional scan ID')
@@ -1104,4 +1063,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
